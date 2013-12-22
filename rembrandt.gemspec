@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Rembrandt::VERSION
   spec.authors       = ["Jeff Casimir"]
   spec.email         = ["jeff@casimircreative.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = "A library for generating and storing syntax-highlighted code"
+  spec.summary       = "Powered by the amazing Pygments Python library."
+  spec.homepage      = "http://github.com/jcasimir/rembrandt"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "minitest", "~> 5"
 end
