@@ -1,4 +1,4 @@
-require './lib/rembrandt/engines/pygmentize'
+require_relative 'engines/pygmentize'
 
 module Rembrandt
   class Highlighter
