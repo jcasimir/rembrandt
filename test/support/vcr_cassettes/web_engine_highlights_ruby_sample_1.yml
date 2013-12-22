@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://pygmentize.herokuapp.com/
+    body:
+      encoding: US-ASCII
+      string: lang=ruby&code=class+Sample%0A++def+a_method%0A++++puts+%22Some+String%22%0A++end%0Aend
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Host:
+      - pygmentize.herokuapp.com
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Sun, 22 Dec 2013 06:56:30 GMT
+      Server:
+      - Werkzeug/0.8.1 Python/2.7.1
+      Content-Length:
+      - '300'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |
+        <div class="highlight"><pre><span class="k">class</span> <span class="nc">Sample</span>
+          <span class="k">def</span> <span class="nf">a_method</span>
+            <span class="nb">puts</span> <span class="s2">&quot;Some String&quot;</span>
+          <span class="k">end</span>
+        <span class="k">end</span>
+        </pre></div>
+    http_version: 
+  recorded_at: Sun, 22 Dec 2013 06:56:30 GMT
+recorded_with: VCR 2.8.0

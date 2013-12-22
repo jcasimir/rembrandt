@@ -1,6 +1,6 @@
 module Rembrandt
   module Engines
-    class Engines::Pygmentize
+    class Pygmentize
       def highlight(input, language)
         tmp_file = File.open("./tmp/colorize_temp", "w")
         tmp_file.write(input)

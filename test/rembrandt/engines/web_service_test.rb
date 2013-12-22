@@ -13,6 +13,8 @@ class EnginesPygmentizeTest < CodeHighlightTest
   end
 
   def test_it_highlights
-    assert_highlight 'ruby_sample_1.rb', 'ruby'
+    VCR.use_cassette('web_engine_highlights_ruby_sample_1') do
+      assert_highlight 'ruby_sample_1.rb', 'ruby'
+    end
   end
 end
