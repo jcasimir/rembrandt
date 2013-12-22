@@ -27,4 +27,15 @@ class HighlighterTest < CodeHighlightTest
   def test_highlight_properly_highlights_python
     assert_highlight 'python_sample_1.py', 'python'
   end
+
+  class StubEngine
+    def highlight(text, language)
+      "stub highlight"
+    end
+  end
+
+  def test_the_highlight_engine_is_configurable
+    stubbed_highlighter = Rembrandt::Highlighter.new(StubEngine)
+    assert_equal "stub highlight", stubbed_highlighter.highlight("hello", "ruby")
+  end
 end
