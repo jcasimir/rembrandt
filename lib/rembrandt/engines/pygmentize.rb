@@ -2,10 +2,12 @@ module Rembrandt
   module Engines
     class Pygmentize
       def highlight(input, language)
-        tmp_file = File.open("./tmp/colorize_temp", "w")
+        tmp_file = File.open(".colorize_temp", "w")
         tmp_file.write(input)
         tmp_file.close
-        `pygmentize -f html -l #{language} ./tmp/colorize_temp`
+        output = `pygmentize -f html -l #{language} .colorize_temp`
+        `rm .colorize_temp`
+        output
       end
     end
   end
