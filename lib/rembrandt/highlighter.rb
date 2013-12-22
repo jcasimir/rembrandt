@@ -1,3 +1,5 @@
+require './lib/rembrandt/engines/pygmentize'
+
 module Rembrandt
   class Highlighter
     def default_language
@@ -5,10 +7,7 @@ module Rembrandt
     end
 
     def highlight(input, language = default_language)
-      tmp_file = File.open("./tmp/colorize_temp", "w")
-      tmp_file.write(input)
-      tmp_file.close
-      `pygmentize -f html -l #{language} ./tmp/colorize_temp`
+      Engines::Pygmentize.new.highlight(input, language)
     end
   end
 end

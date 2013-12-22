@@ -1,16 +1,7 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/rembrandt/highlighter'
 
-class InOutTest < Minitest::Test
-  def assert_highlight(filename, language)
-    input = File.read("./test/support/#{filename}")
-    expected = File.read("./test/support/#{filename}.html")
-    assert_equal expected, highlighter.highlight(input, language)
-  end
-end
-
-class HighlighterTest < InOutTest
+class HighlighterTest < CodeHighlightTest
   def test_it_exists
     assert Rembrandt::Highlighter
   end
