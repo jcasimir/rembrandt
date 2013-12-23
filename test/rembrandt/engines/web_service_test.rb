@@ -23,10 +23,4 @@ class EnginesPygmentizeTest < CodeHighlightTest
       assert Rembrandt::Engines::WebService.available?
     end
   end
-
-  def test_it_is_not_available_when_the_website_does_not_respond
-    # VCR.use_cassette('web_engine_is_accessible') do
-    #   assert Rembrandt::Engines::WebService.available?
-    # end
-  end
 end
