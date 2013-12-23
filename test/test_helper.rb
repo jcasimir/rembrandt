@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'vcr'
+require 'mocha/setup'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'test/support/vcr_cassettes'
