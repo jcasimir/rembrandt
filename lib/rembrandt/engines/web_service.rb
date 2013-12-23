@@ -10,6 +10,11 @@ module Rembrandt
       def url
         @url ||= URI.parse('http://pygmentize.herokuapp.com/')
       end
+
+      def self.available?
+        site = Net::HTTP.new('pygmentize.herokuapp.com', 80)
+        site.request_head('/').code == "200"
+      end
     end
   end
 end
