@@ -1,5 +1,5 @@
 require './test/test_helper'
-require './lib/rembrandt/highlighter'
+require './lib/rembrandt'
 
 class HighlighterTest < CodeHighlightTest
   def test_it_exists
@@ -37,5 +37,20 @@ class HighlighterTest < CodeHighlightTest
   def test_the_highlight_engine_is_configurable
     stubbed_highlighter = Rembrandt::Highlighter.new(StubEngine)
     assert_equal "stub highlight", stubbed_highlighter.highlight("hello", "ruby")
+  end
+
+  def test_it_defaults_to_pygmentize_if_available
+    expected_engine = Rembrandt::Engines::Pygmentize
+    expected_engine.stubs(:available?).returns(true)
+    lighter = Rembrandt::Highlighter.new
+    assert_equal expected_engine, lighter.engine.class
+  end
+
+  def test_it_uses_the_web_engine_if_pygmentize_is_not_available
+    Rembrandt::Engines::Pygmentize.stubs(:available?).returns(false)
+    Rembrandt::Engines::WebService.stubs(:available?).returns(true)
+    expected_engine = Rembrandt::Engines::WebService
+    lighter = Rembrandt::Highlighter.new
+    assert_equal expected_engine, lighter.engine.class
   end
 end

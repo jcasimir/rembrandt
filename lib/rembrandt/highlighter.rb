@@ -5,15 +5,15 @@ module Rembrandt
     attr_reader :engine
 
     def initialize(input_engine = nil)
-      @engine = (input_engine || default_engine).new
+      @engine = (input_engine || autoselect_engine).new
     end
 
     def default_language
       "ruby"
     end
 
-    def default_engine
-      Engines::Pygmentize
+    def autoselect_engine
+      [Engines::Pygmentize, Engines::WebService].detect(&:available?)
     end
 
     def highlight(input, language = default_language)
