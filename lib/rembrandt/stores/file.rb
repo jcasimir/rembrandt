@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'digest/md5'
 
 module Rembrandt
   module Stores
@@ -19,6 +20,15 @@ module Rembrandt
         FileUtils.mkdir_p output_directory
       end
 
+      def fetch(data, type)
+        result = read(key_for(data, type))
+        if result.nil? && block_given?
+          data_to_store = yield
+          write(key_for(data, type), data_to_store)
+          return data_to_store
+        end
+      end
+
       def write(key, data)
         ::File.open( filename_for(key), "w" ) do |f|
           f.write(data)
@@ -26,7 +36,10 @@ module Rembrandt
       end
 
       def read(key)
-        ::File.read filename_for(key)
+        filename = filename_for(key)
+        if ::File.exist?(filename)
+          ::File.read(filename_for(key))
+        end
       end
 
       def filename_for(key)
@@ -35,6 +48,14 @@ module Rembrandt
 
       def prefix
         'rembrandt_'
+      end
+
+      def key_for(input, language)
+        Digest::MD5.hexdigest(input + language)
+      end
+
+      def flush
+        `rm -rf #{output_directory}/*` if Dir.exist?(output_directory)
       end
     end
   end

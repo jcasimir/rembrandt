@@ -17,7 +17,8 @@ class HighlighterTest < CodeHighlightTest
   end
 
   def test_highlight_takes_an_input_and_a_language
-    assert highlighter.highlight("Hello, World", 'ruby')
+    result = highlighter.highlight("Hello, World", 'ruby')
+    assert result, "Got: #{result}"
   end
 
   def test_highlight_properly_highlights_ruby
@@ -52,5 +53,31 @@ class HighlighterTest < CodeHighlightTest
     expected_engine = Rembrandt::Engines::WebService
     lighter = Rembrandt::Highlighter.new
     assert_equal expected_engine, lighter.engine.class
+  end
+
+  class StubStore
+    def write(key, data)
+      true
+    end
+
+    def fetch(input, language)
+      true
+    end
+
+    def flush
+      true
+    end
+  end
+
+  def test_it_uses_a_datastore
+    lighter = Rembrandt::Highlighter.new(StubEngine)
+    store = StubStore.new
+    highlighter.store = store
+    store.expects(:fetch).once
+    highlighter.highlight("Hello, World")
+  end
+
+  def teardown
+    highlighter.store.flush
   end
 end

@@ -8,23 +8,31 @@ class StoresFileTest < CodeHighlightTest
     './tmp/.rembrandt_cache'
   end
 
+  def setup
+    @store = Rembrandt::Stores::File.new(target)
+  end
+
   def test_it_creates_the_storage_folder
     `rm -rf #{target}` if Dir.exist?(target)
     refute Dir.exist?(target), "Directory #{target} should not exist."
-    @store = Rembrandt::Stores::File.new(target)
+    store = Rembrandt::Stores::File.new(target)
     assert Dir.exist?(target), "Directory #{target} should exist."
   end
 
   def test_it_fetches_data_from_a_file
     sample = "Hello, World!"
     key = "001"
-    store = Rembrandt::Stores::File.new(target)
     store.write(key, sample)
     fetched = store.read(key)
     assert_equal sample, fetched
   end
 
+  def test_it_calculates_keys
+    sample = "Hello, World!"
+    assert store.key_for(sample, 'ruby')
+  end
+
   def teardown
-    `rm -rf #{target}/*` if Dir.exist?(target)
+    store.flush
   end
 end
