@@ -32,6 +32,27 @@ class StoresRedisTest < CodeHighlightTest
     assert store.key_for(sample, 'ruby')
   end
 
+  def test_it_flushes_the_database
+    store.write("002", "Hello")
+    assert store.read("002")
+    store.flush
+    refute store.read("002"), "All keys should be gone"
+  end
+
+  def test_fetch_does_not_write_when_there_is_no_block
+    refute store.fetch("hello", "ruby"), "hello should not be found"
+    key = store.key_for("hello", "ruby")
+    refute store.read(key), "hello should not have been written"
+  end
+
+  def test_fetch_writes_the_result_of_a_block
+    refute store.fetch("hello", "ruby")
+    result = store.fetch("hello", "ruby"){ "Hello, World" }
+    assert_equal "Hello, World", result
+    key = store.key_for("hello", "ruby")
+    assert_equal result, store.read(key)
+  end
+
   def teardown
     store.flush
   end

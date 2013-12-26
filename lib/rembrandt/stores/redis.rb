@@ -22,8 +22,17 @@ module Rembrandt
         database.get(key)
       end
 
-      def flush
+      def fetch(input, language)
+        result = read key_for(input, language)
+        if result.nil? && block_given?
+          data_to_store = yield
+          write(key_for(input, language), data_to_store)
+          return data_to_store
+        end
+      end
 
+      def flush
+        database.flushdb
       end
 
       def key_for(input, language)
