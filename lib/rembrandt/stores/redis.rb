@@ -1,9 +1,11 @@
 require 'digest/md5'
 require 'redis'
+require_relative 'fetchable'
 
 module Rembrandt
   module Stores
     class Redis
+      include Fetchable
       attr_reader :database
 
       def initialize
@@ -22,21 +24,8 @@ module Rembrandt
         database.get(key)
       end
 
-      def fetch(input, language)
-        result = read key_for(input, language)
-        if result.nil? && block_given?
-          data_to_store = yield
-          write(key_for(input, language), data_to_store)
-          return data_to_store
-        end
-      end
-
       def flush
         database.flushdb
-      end
-
-      def key_for(input, language)
-        Digest::MD5.hexdigest(input + language)
       end
     end
   end

@@ -1,9 +1,11 @@
 require 'fileutils'
 require 'digest/md5'
+require_relative 'fetchable'
 
 module Rembrandt
   module Stores
     class File
+      include Fetchable
       attr_reader :output_directory
 
       def initialize(directory)
@@ -18,15 +20,6 @@ module Rembrandt
 
       def create_directory
         FileUtils.mkdir_p output_directory
-      end
-
-      def fetch(data, type)
-        result = read(key_for(data, type))
-        if result.nil? && block_given?
-          data_to_store = yield
-          write(key_for(data, type), data_to_store)
-          return data_to_store
-        end
       end
 
       def write(key, data)
@@ -48,10 +41,6 @@ module Rembrandt
 
       def prefix
         'rembrandt_'
-      end
-
-      def key_for(input, language)
-        Digest::MD5.hexdigest(input + language)
       end
 
       def flush
