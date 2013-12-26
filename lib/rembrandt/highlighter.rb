@@ -30,8 +30,12 @@ module Rembrandt
       end
     end
 
+    def engines
+      Config.engine_priority
+    end
+
     def autoselect_engine
-      [Engines::Pygmentize, Engines::WebService].detect(&:available?)
+      engines.detect(&:available?)
     end
 
     def highlight(input, language = default_language)

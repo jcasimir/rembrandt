@@ -40,21 +40,6 @@ class HighlighterTest < CodeHighlightTest
     assert_equal "stub highlight", stubbed_highlighter.highlight("hello", "ruby")
   end
 
-  def test_it_defaults_to_pygmentize_if_available
-    expected_engine = Rembrandt::Engines::Pygmentize
-    expected_engine.stubs(:available?).returns(true)
-    lighter = Rembrandt::Highlighter.new
-    assert_equal expected_engine, lighter.engine.class
-  end
-
-  def test_it_uses_the_web_engine_if_pygmentize_is_not_available
-    Rembrandt::Engines::Pygmentize.stubs(:available?).returns(false)
-    Rembrandt::Engines::WebService.stubs(:available?).returns(true)
-    expected_engine = Rembrandt::Engines::WebService
-    lighter = Rembrandt::Highlighter.new
-    assert_equal expected_engine, lighter.engine.class
-  end
-
   class StubStore
     def write(key, data)
       true
@@ -80,6 +65,12 @@ class HighlighterTest < CodeHighlightTest
   def test_it_uses_the_default_language_from_config
     Rembrandt::Config.default_language = "python"
     assert_equal "python", highlighter.default_language
+  end
+
+  def test_it_uses_the_engine_prioritization_from_config
+    preferred = [Rembrandt::Engines::Pygmentize]
+    Rembrandt::Config.engine_priority = preferred
+    assert_equal preferred, highlighter.engines
   end
 
   def teardown

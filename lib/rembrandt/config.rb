@@ -11,5 +11,17 @@ module Rembrandt
     def self.library_default_language
       "ruby"
     end
+
+    def self.engine_priority=(engines)
+      @engine_priority = engines
+    end
+
+    def self.engine_priority
+      @engine_priority || library_default_engine_priority
+    end
+
+    def self.library_default_engine_priority
+      [Engines::Pygmentize, Engines::WebService]
+    end
   end
 end
