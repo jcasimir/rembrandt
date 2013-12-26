@@ -26,7 +26,7 @@ module Rembrandt
       if redis.available?
         redis
       else
-        Stores::File.new('./tmp/.rembrandt_cache')
+        Stores::File.new
       end
     end
 

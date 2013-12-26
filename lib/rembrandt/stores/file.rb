@@ -8,8 +8,8 @@ module Rembrandt
       include Fetchable
       attr_reader :output_directory
 
-      def initialize(directory)
-        self.output_directory = directory
+      def initialize(directory = nil)
+        self.output_directory = directory || Config.file_store_directory
         create_directory
       end
 

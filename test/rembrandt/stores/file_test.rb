@@ -1,11 +1,12 @@
 require './test/test_helper'
 require './lib/rembrandt/stores/file'
+require './lib/rembrandt/config'
 
 class StoresFileTest < CodeHighlightTest
   attr_reader :store
 
   def target
-    './tmp/.rembrandt_cache'
+    Rembrandt::Config.file_store_directory
   end
 
   def setup
@@ -30,6 +31,12 @@ class StoresFileTest < CodeHighlightTest
   def test_it_calculates_keys
     sample = "Hello, World!"
     assert store.key_for(sample, 'ruby')
+  end
+
+  def test_it_uses_the_configured_output_directory
+    Rembrandt::Config.file_store_directory = './tmp/'
+    store2 = Rembrandt::Stores::File.new
+    assert_equal './tmp/', store2.output_directory
   end
 
   def teardown
