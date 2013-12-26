@@ -27,6 +27,14 @@ module Rembrandt
       def flush
         database.flushdb
       end
+
+      # def connect_to_highlight_store
+      #   host = ENV["REDISTOGO_URL"] || 'redis://localhost:6379'
+      #   uri = URI.parse(host)
+      #   store = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+      #   puts "Connecting to highlight store #{store.inspect}"
+      #   store
+      # end
     end
   end
 end

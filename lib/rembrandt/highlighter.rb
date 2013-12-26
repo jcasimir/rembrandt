@@ -1,6 +1,7 @@
 require_relative 'engines/pygmentize'
 require_relative 'engines/web_service'
 require_relative 'stores/file'
+require_relative 'stores/redis'
 
 module Rembrandt
   class Highlighter
