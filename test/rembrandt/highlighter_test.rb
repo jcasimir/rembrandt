@@ -77,6 +77,11 @@ class HighlighterTest < CodeHighlightTest
     highlighter.highlight("Hello, World")
   end
 
+  def test_it_uses_the_default_language_from_config
+    Rembrandt::Config.default_language = "python"
+    assert_equal "python", highlighter.default_language
+  end
+
   def teardown
     highlighter.store.flush
   end
