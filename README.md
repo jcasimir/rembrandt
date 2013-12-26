@@ -18,7 +18,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```irb
+> require 'rembrandt'
+> highlighter = Rembrandt::Highlighter.new
+> highlighter.highlight("class Sample\nend", "ruby")
+```
 
 ## Contributing
 

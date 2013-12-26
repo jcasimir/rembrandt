@@ -29,6 +29,12 @@ class HighlighterTest < CodeHighlightTest
     assert_highlight 'python_sample_1.py', 'python'
   end
 
+  def test_it_highlights_a_file_directly
+    input_filename = './test/support/ruby_sample_1.rb'
+    expected = File.read('./test/support/ruby_sample_1.rb.html')
+    assert_equal expected, highlighter.highlight_file(input_filename, 'ruby')
+  end
+
   class StubEngine
     def highlight(text, language)
       "stub highlight"

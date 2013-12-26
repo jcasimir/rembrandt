@@ -10,7 +10,7 @@ class StoresFileTest < CodeHighlightTest
   end
 
   def setup
-    @store = Rembrandt::Stores::File.new(target)
+    @store = Rembrandt::Stores::File.new
   end
 
   def test_it_creates_the_storage_folder

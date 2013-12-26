@@ -43,5 +43,10 @@ module Rembrandt
         engine.highlight(input, language)
       end
     end
+
+    def highlight_file(filename, language = default_language)
+      data = File.read(filename)
+      highlight(data, language)
+    end
   end
 end
