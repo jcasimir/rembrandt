@@ -20,7 +20,12 @@ module Rembrandt
     end
 
     def autoselect_store
-      Stores::File.new('./tmp/.rembrandt_cache')
+      redis = Stores::Redis.new
+      if redis.available?
+        redis
+      else
+        Stores::File.new('./tmp/.rembrandt_cache')
+      end
     end
 
     def autoselect_engine
