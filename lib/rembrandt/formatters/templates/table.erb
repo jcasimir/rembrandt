@@ -1,0 +1,24 @@
+<div class="highlight">
+<table>
+<tr>
+<td class="gutter">
+<pre class="line-numbers">
+<% line_count.times do |i| %>
+<span class='line-number'><%= i + 1 %></span>
+<% end %>
+</pre>
+</td>
+<td class='code'>
+<pre>
+<code class='<%= language %>'>
+<% code.lines.each do |line| %>
+<span class='line'>
+<%= line %>
+</span>
+<% end %>
+</code>
+</pre>
+</td>
+</tr>
+</table>
+</div>
