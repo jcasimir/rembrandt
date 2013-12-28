@@ -3,6 +3,7 @@ require_relative 'engines/web_service'
 require_relative 'stores/file'
 require_relative 'stores/redis'
 require_relative 'config'
+require_relative 'language_normalizer'
 
 module Rembrandt
   class Highlighter
@@ -38,7 +39,8 @@ module Rembrandt
       engines.detect(&:available?)
     end
 
-    def highlight(input, language = default_language)
+    def highlight(input, input_language = default_language)
+      language = normalize_language(input_language)
       store.fetch(input, language) do
         engine.highlight(input, language)
       end
@@ -47,6 +49,14 @@ module Rembrandt
     def highlight_file(filename, language = default_language)
       data = File.read(filename)
       highlight(data, language)
+    end
+
+    def normalize_language(input)
+      language_normalizer.process(input)
+    end
+
+    def language_normalizer
+      @language_normalizer ||= LanguageNormalizer.new
     end
   end
 end

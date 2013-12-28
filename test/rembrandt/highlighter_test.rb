@@ -35,6 +35,14 @@ class HighlighterTest < CodeHighlightTest
     assert_equal expected, highlighter.highlight_file(input_filename, 'ruby')
   end
 
+  def test_it_normalizes_unusual_language_abbreviations
+    #     lang = 'ruby' if lang == 'ru'
+    # lang = 'objc' if lang == 'm'
+    # lang = 'perl' if lang == 'pl'
+    # lang = 'yaml' if lang == 'yml'
+    assert_highlight 'ruby_sample_1.rb', 'ru'
+  end
+
   class StubEngine
     def highlight(text, language)
       "stub highlight"
