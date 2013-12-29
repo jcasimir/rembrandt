@@ -18,10 +18,30 @@ Or install it yourself as:
 
 ## Usage
 
+### Basic Highlighting
+
 ```irb
 > require 'rembrandt'
 > highlighter = Rembrandt::Highlighter.new
 > highlighter.highlight("class Sample\nend", "ruby")
+```
+
+### Highlighting Source in a File
+
+```irb
+> require 'rembrandt'
+> highlighter = Rembrandt::Highlighter.new
+> highlighter.highlight_file("./my_input_file.rb", "ruby")
+```
+
+### Using a Formatter
+
+```irb
+> require 'rembrandt'
+> highlighter = Rembrandt::Highlighter.new
+> formatter = Rembrandt::Formatters::Table.new
+> code = highlighter.highlight("class Sample\nend", "ruby")
+> table = formatter.format(code, "ruby")
 ```
 
 ## Contributing
