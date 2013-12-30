@@ -12,12 +12,9 @@ module Rembrandt
         code.lines.count
       end
 
-      def language
-        'ruby'
-      end
-
       def extract_code_from_html(input)
-        input.match(/<pre>(.+)<\/pre>/m)[1]
+        matches = input.match(/<pre>(.+)<\/pre>/m)
+        matches[1] if matches
       end
     end
   end
