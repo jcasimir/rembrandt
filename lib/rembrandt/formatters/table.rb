@@ -10,7 +10,11 @@ module Rembrandt
       end
 
       def template
-        @template ||= Tilt.new('./lib/rembrandt/formatters/templates/table.erb', :trim => true)
+        @template ||= Tilt.new(template_path, :trim => true)
+      end
+
+      def template_path
+        File.expand_path(File.join(File.dirname(__FILE__), "./templates/table.erb"))
       end
     end
   end
