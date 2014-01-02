@@ -51,3 +51,7 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+### When Developing
+
+It's expected that when developing that you have both Redis and Python/Pygmentize available on your machine. If you don't have Pygments installed, Rembrant's tests will try to use the HTTP highlight engine which is blocked by VCR.
