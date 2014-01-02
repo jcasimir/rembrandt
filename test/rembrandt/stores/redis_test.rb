@@ -53,6 +53,14 @@ class StoresRedisTest < CodeHighlightTest
     assert_equal result, store.read(key)
   end
 
+  def test_it_uses_a_redis_url_in_an_environment_variable
+    url =  "redis://redisuser:redispassword@provider.example.com:9352/"
+    ENV['REMBRANDT_REDIS_URL'] = url
+    store2 = Rembrandt::Stores::Redis.new
+    assert_equal url, store2.url
+    ENV['REMBRANDT_REDIS_URL'] = ''
+  end
+
   def teardown
     store.flush
   end
