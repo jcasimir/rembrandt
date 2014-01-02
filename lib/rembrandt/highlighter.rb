@@ -7,11 +7,14 @@ require_relative 'language_normalizer'
 
 module Rembrandt
   class Highlighter
-    attr_reader :engine
     attr_writer :store
 
     def initialize(input_engine = nil)
-      @engine = (input_engine || autoselect_engine).new
+      @engine = input_engine.new if input_engine
+    end
+
+    def engine
+      @engine ||= autoselect_engine
     end
 
     def store
@@ -36,7 +39,11 @@ module Rembrandt
     end
 
     def autoselect_engine
-      engines.detect(&:available?)
+      begin
+        engines.detect(&:available?).new
+      rescue
+        raise "Error: no highlight engine is available."
+      end
     end
 
     def highlight(input, input_language = default_language)
