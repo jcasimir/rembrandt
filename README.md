@@ -1,6 +1,6 @@
 # Rembrandt
 
-A tool for generating syntax-highlighted code, powered by Pygments.
+Rembrandt is a library for generating and caching syntax-highlighted code. Highlighting is powered by Pygments, either running locally or over a web API. Caching is handled either by Redis or the local file system.
 
 ## Installation
 
