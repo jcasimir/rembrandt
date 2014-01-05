@@ -18,6 +18,35 @@ Or install it yourself as:
 
 ## Usage
 
+### Defaults
+
+#### Pygments Local vs API
+
+The library will run `which pygmentize` to check if Pygments is installed locally. If it is, the library will use it. If it is not, the library will attempt to use the web-api at http://pygmentize.herokuapp.com
+
+#### Storage with Redis or the Filesystem
+
+If you'd like to use Redis as the datastore, there are two steps:
+
+* Add the `redis` gem to your bundle
+* Define an environment variable with the redis address
+
+The environment variable `REMBRANDT_REDIS_URL`. On a unix system you can do this with the `export` instruction at your terminal:
+
+```plain
+export REMBRANDT_REDIS_URL='redis://my_user_name:my_password@example.com:9352/'
+```
+
+To verify the environment variable, open `irb` and try to access it:
+
+```plain
+$ irb
+> 2.0.0-p353 :001 > ENV['REMBRANDT_REDIS_URL']
+=> "redis://my_user_name:my_password@example.com:9352/" 
+```
+
+If Redis is *not* required and/or the environment variable is *not* defined, the library will use the local filesystem.
+
 ### Basic Highlighting
 
 ```irb
@@ -26,7 +55,7 @@ Or install it yourself as:
 > highlighter.highlight("class Sample\nend", "ruby")
 ```
 
-### Highlighting Source in a File
+### Highlighting Source from a File
 
 ```irb
 > require 'rembrandt'
