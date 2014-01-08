@@ -18,13 +18,11 @@ Or install it yourself as:
 
 ## Usage
 
-### Defaults
-
-#### Pygments Local vs API
+### Pygments Local vs API
 
 The library will run `which pygmentize` to check if Pygments is installed locally. If it is, the library will use it. If it is not, the library will attempt to use the web-api at http://pygmentize.herokuapp.com
 
-#### Storage with Redis or the Filesystem
+### Storage with Redis or the Filesystem
 
 If you'd like to use Redis as the datastore, there are two steps:
 
@@ -61,6 +59,29 @@ If Redis is *not* required and/or the environment variable is *not* defined, the
 > require 'rembrandt'
 > highlighter = Rembrandt::Highlighter.new
 > highlighter.highlight_file("./my_input_file.rb", "ruby")
+```
+
+### Usage with Octopress
+
+Octopress has some really complex things going on in `plugins/pygments.rb` and `plugins/highlight_code.rb` and `plugins/backtick_code_block.rb`. Let's simplify.
+
+* Delete `plugins/highlight_code.rb`
+* Delete `plugins/pygments_code.rb`
+* Replace `plugins/backtick_code_block.rb` with the following:
+
+```ruby
+module BacktickCodeBlock
+  def render_code_block(input)
+
+  end
+
+  def highlighter
+    @highlighter ||= Rembrandt::Highlighter.new
+  end
+
+  def formatter
+    @formatter ||= Rembrandt::Formatters::Octopress.new
+  end
 ```
 
 ### Using a Formatter
