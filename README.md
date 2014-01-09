@@ -72,6 +72,10 @@ Octopress has some really complex things going on in `plugins/pygments.rb` and `
 ```ruby
 module BacktickCodeBlock
   def render_code_block(input)
+    formatter.format(strip_context(input))
+  end
+
+  def strip_context(block)
 
   end
 
